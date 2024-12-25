@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { useChat } from "../context/ChatContext";
-import { useInstantDB } from "../hooks/useInstantDB";
+import React, { useContext, useState } from "react";
+
 import {
   InputContainer,
   MessageInput as Input,
   SendButton,
 } from "../styles/StyledComponents";
+import { ContactsContext } from "../context/ContactsContext";
+import useInstantDB from "../customHooks/useInstantDB";
 
 export default function MessageInput() {
   const [message, setMessage] = useState("");
-  const { state } = useChat();
+  const { state } = useContext(ContactsContext);
   const { sendMessage } = useInstantDB();
 
   const handleSubmit = (e) => {
