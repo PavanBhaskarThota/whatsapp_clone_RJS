@@ -12,12 +12,13 @@ export default function MessageInput() {
   const [message, setMessage] = useState("");
   const { state } = useContext(ContactsContext);
   const { sendMessage } = useInstantDB();
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message.trim() || !state.selectedContact) return;
 
-    sendMessage(state.selectedContact.id, message.trim());
+    sendMessage(state.selectedContact, message.trim());
     setMessage("");
   };
 

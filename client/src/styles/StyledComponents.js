@@ -12,10 +12,30 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
+export const Navbar = styled.nav`
+  height: 10vh;
+  width: 80%;
+  margin: auto;
+  background-color: #128c7e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
 export const AppContainer = styled.div`
   display: flex;
-  height: 100vh;
+  height: 90vh;
   background-color: #f0f2f5;
+  width: 80%;
+  margin: auto;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const Sidebar = styled.div`
@@ -25,13 +45,13 @@ export const Sidebar = styled.div`
   overflow-y: auto;
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 30%;
     display: ${(props) => (props.isHidden ? "none" : "block")};
   }
 `;
 
 export const ContactItem = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #e9edef;
   cursor: pointer;
   background: ${(props) => (props.isSelected ? "#f0f2f5" : "white")};
@@ -57,9 +77,11 @@ export const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: #efeae2;
+  justify-content: end;
 
   @media (max-width: 768px) {
-    display: ${(props) => (props.isHidden ? "flex" : "none")};
+    /* display: ${(props) => (props.isHidden ? "flex" : "none")}; */
+    width: 65%;
   }
 `;
 
@@ -84,15 +106,18 @@ const messageAnimation = keyframes`
 
 export const MessagesContainer = styled.div`
   flex: 1;
-  padding: 1rem;
+  /* padding: 1rem; */
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  min-height: 90vh;
+  justify-content: space-between;
 `;
 
 export const MessageBubble = styled.div`
-  max-width: 65%;
-  padding: 0.5rem 1rem;
+  width: 60%;
+  margin-left: auto;
+  padding: 0.1rem 1rem;
   margin-bottom: 0.5rem;
   border-radius: 7.5px;
   position: relative;
@@ -100,6 +125,7 @@ export const MessageBubble = styled.div`
   background: ${(props) => (props.sent ? "#d9fdd3" : "white")};
   box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
   animation: ${messageAnimation} 0.3s ease;
+  margin-right: 10px;
 `;
 
 export const MessageTime = styled.span`
@@ -115,6 +141,12 @@ export const InputContainer = styled.form`
   background: #f0f2f5;
   display: flex;
   gap: 0.5rem;
+  width: 95%;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
 `;
 
 export const MessageInput = styled.input`
@@ -141,5 +173,9 @@ export const SendButton = styled.button`
 
   &:hover {
     background: #008f72;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.5rem 1rem;
   }
 `;

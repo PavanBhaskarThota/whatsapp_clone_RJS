@@ -12,17 +12,23 @@ const useInstantDB = () => {
     return { isLoading, error, data };
   }
 
-  console.log(fetchUsers());
+  function fetchMessages(contactId) {
+    const { isLoading, error, data } = db.useQuery({
+      messages: { contactId: contactId },
+    });
+    return { isLoading, error, data };
+  }
 
-  const sendMessage = async (contactId, text) => {
-    try {
-      const message = { id: Date.now(), text, sent: true };
-      await db.transact(tx.messages[id(contactId)].update(message));
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  };
-
+  function sendMessage(contactId, text) {
+    db.transact(
+      db.tx.messages[id()].update({
+        createdAt: new Date(),
+        text: text,
+        contactId: contactId,
+        sent: true,
+      })
+    );
+  }
   function addUser(name) {
     db.transact(
       db.tx.users[id()].update({
@@ -32,7 +38,7 @@ const useInstantDB = () => {
     );
   }
 
-  return { fetchUsers, sendMessage, addUser };
+  return { fetchUsers, sendMessage, addUser, fetchMessages };
 };
 
 export default useInstantDB;

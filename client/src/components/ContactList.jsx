@@ -12,9 +12,7 @@ import { ContactsContext } from "../context/ContactsContext";
 export default function ContactList() {
   const { state, setContacts, selectContact } = useContext(ContactsContext);
   const { fetchUsers } = useInstantDB();
-  const {isLoading, error, data} = fetchUsers();
-
-  console.log(state);
+  const { isLoading, error, data } = fetchUsers();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +28,7 @@ export default function ContactList() {
   const { addUser } = useInstantDB();
 
   const handleSaveContact = () => {
+    if (!newContactName) return;
     addUser(newContactName);
     setAddContact(false);
     setNewContactName("");
@@ -42,7 +41,7 @@ export default function ContactList() {
           <ContactItem
             key={contact.id}
             isSelected={state.selectedContact?.id === contact.id}
-            onClick={() => selectContact(contact.id)}
+            onClick={() => selectContact(contact.id, contact.name)}
           >
             <ContactName>{contact.name}</ContactName>
             <LastMessage>{contact.lastMessage}</LastMessage>
@@ -56,13 +55,17 @@ export default function ContactList() {
               type="text"
               placeholder="Name"
               value={newContactName}
+              autoFocus
               onChange={(e) => setNewContactName(e.target.value)}
             />
-            <button onClick={handleSaveContact}>Save contact</button>
+            <button onClick={handleSaveContact}>Save</button>
           </div>
         )}
-        <button onClick={() => setAddContact(!addNewContact)}>
-          {addNewContact ? "Cancel" : "Add Contact +"}
+        <button
+          onClick={() => setAddContact(!addNewContact)}
+          style={{ backgroundColor: addNewContact ? "#C62300" : "#128c7e" }}
+        >
+          {addNewContact ? "Cancel" : "Add +"}
         </button>
       </ADD_CONTACT>
     </Sidebar>
@@ -70,11 +73,15 @@ export default function ContactList() {
 }
 
 const ADD_CONTACT = styled.div`
+  width: 70%;
+  margin: auto;
+  padding: 20px 0;
+
   button {
     width: 100%;
     height: 40px;
-    border-radius: 10px;
-    background-color: var(--color, #016e17);
+    border-radius: 20px;
+    background-color: var(--color, #128c7e);
     border: none;
     color: white;
     font-weight: 500;
@@ -88,7 +95,15 @@ const ADD_CONTACT = styled.div`
     border-radius: 10px;
     margin-bottom: 20px;
     border: 0.5px solid lightgray;
-    padding: 0 10px;
+    /* padding: 0 10px; */
     margin: auto;
+  }
+  input:focus {
+    outline: none;
+    border: 2px solid lightblue;
+  }
+
+  @media (max-width: 768px) {
+    width: 95%;
   }
 `;

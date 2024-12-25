@@ -1,35 +1,52 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import MessageInput from "./MessageInput";
 import Message from "./Message";
 import { ContactsContext } from "../context/ContactsContext";
+import useInstantDB from "../customHooks/useInstantDB";
+import { ChatContainer, MessagesContainer } from "../styles/StyledComponents";
 
 export default function ChatWindow() {
- const { state, dispatch } = useContext(ContactsContext);
-  // const messages = state.selectedContact
-  //   ? state.messages[state.selectedContact.id] || []
-  //   : [];
+  const { state } = useContext(ContactsContext);
+  const { fetchMessages } = useInstantDB();
+  const { isLoading, error, data } = fetchMessages();
+  const [messages, setMessages] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!isLoading && data) {
+        setMessages(data.messages);
+      }
+    };
+    fetchData();
+  }, [isLoading, data]);
 
   return (
-    <div className="h-full flex flex-col">
-      { state &&state.selectedContact ? (
-        <>
-          <div className="p-4 bg-gray-200 border-b">
-            <h2 className="font-semibold">{state.selectedContact.name}</h2>
+    <ChatContainer>
+      {state && state.selectedContact ? (
+        <MessagesContainer>
+          <div>
+            <h2 style={{ color: "#128c7e", marginLeft: "10px" }}>
+              {state.selectedName}
+            </h2>
           </div>
-          <div className="flex-1 overflow-y-auto p-4">
-            {/* {state.messages && state.messages.map((message) => (
-              <Message key={message.id} message={message} />
-            ))} */}
-            hello
+          <div>
+            {messages &&
+              messages
+                .filter(
+                  (message) => message.contactId === state.selectedContact
+                )
+                .map((message) => (
+                  <Message key={message.id} message={message} />
+                ))}
+            <MessageInput />
           </div>
-          <MessageInput />
-        </>
+        </MessagesContainer>
       ) : (
-        <div className="flex-1 flex items-center justify-center text-gray-500">
-          Select a contact to start chatting
+        <div style={{ textAlign: "center", marginBottom: "50%" }}>
+          <h3>Select a contact to start chatting</h3>
         </div>
       )}
-    </div>
+    </ChatContainer>
   );
 }

@@ -1,8 +1,5 @@
 import React, { useEffect } from 'react';
 import { ContactsProvider } from './context/ContactsContext';
-import { MessagesProvider } from './context/MessagesContext';
-import { ContactList } from './components/ContactList';
-import { ChatWindow } from './components/ChatWindow';
 import { Layout } from './components/Layout';
 
 const App = () => {
@@ -12,9 +9,9 @@ const App = () => {
 
   return (
     <ContactsProvider>
-      <MessagesProvider>
+      {/* <MessagesProvider> */}
         <Layout/>
-      </MessagesProvider>
+      {/* </MessagesProvider> */}
     </ContactsProvider>
   );
 };

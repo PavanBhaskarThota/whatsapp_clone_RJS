@@ -6,7 +6,7 @@ export default function Message({ message }) {
     <MessageBubble sent={message.sent}>
       <p>{message.text}</p>
       <MessageTime>
-        {new Date(message.timestamp).toLocaleTimeString()}
+        {new Date(message.createdAt).toLocaleTimeString()}
       </MessageTime>
     </MessageBubble>
   );
