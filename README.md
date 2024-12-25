@@ -37,8 +37,6 @@ A minimal WhatsApp clone focusing on a one-way real-time chat feature. Built usi
 
 ![Site Preview](https://i.ibb.co/kMxJpt2/Screenshot-2024-12-25-180607.png)
 
-
-
 ---
 
 Thank you for exploring this project!
